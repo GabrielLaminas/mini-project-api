@@ -142,7 +142,7 @@ app.route('/certificado').post((req, res) => {
 
 app.post('/validacao', upload.single('pdf'), async (req, res) => {
 
-  const caminho = `src/${req.file.destination}${req.file.filename}`;
+  const caminho = `${req.file.destination}${req.file.filename}`;
 
   if(fs.existsSync(caminho)){
     const pdfParser = new PDFParser(this, 1);
