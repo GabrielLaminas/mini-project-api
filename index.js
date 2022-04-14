@@ -106,14 +106,14 @@ app.route('/certificado').post((req, res) => {
           
         pdf.create(html, optionsPdf)
         .toFile(
-          path.join(__dirname + '/download' + `/certificado${curso}.pdf`), 
+          path.join(__dirname + '/src/download' + `/certificado${curso}.pdf`), 
           (err, filepath) => {
             if(err){
               return res.json(err);
             }
 
             res.type('pdf')
-            return res.download(path.join(__dirname + '/download' + `/certificado${curso}.pdf`))
+            return res.download(path.join(__dirname + '/src/download' + `/certificado${curso}.pdf`))
           }
         )
     });
