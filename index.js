@@ -2,8 +2,12 @@ const CryptoJS = require("crypto-js");
 const pdf = require('html-pdf');
 const ejs = require('ejs');
 
+const multer = require('multer');
+const PDFParser = require('pdf2json');
+
 const express = require('express');
 const cors = require('cors');
+const fs = require('fs');
 const app = express();
 const path = require('path');
 
@@ -33,6 +37,17 @@ let certificados = [
     quantidadeHoras: 6,
   }
 ];
+
+const storage = multer.diskStorage({
+  destination: function(req, file, cb){
+    cb(null, 'upload/');
+  },
+  filename: function(req, file, cb){
+    cb(null, file.originalname + Date.now() + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ storage });
 
 app.route('/certificado').get((req, res) => {
   const pegarDados = certificados.map((infos) => {
@@ -121,6 +136,68 @@ app.route('/certificado').post((req, res) => {
   
   else{
     return res.json('Certificado não existe');
+  }
+
+});
+
+app.post('/validacao', upload.single('pdf'), async (req, res) => {
+
+  const caminho = `${req.file.destination}${req.file.filename}`;
+
+  if(fs.existsSync(caminho)){
+    const pdfParser = new PDFParser(this, 1);
+
+    pdfParser.on("pdfParser_dataError", (errData) => {
+      res.send(errData.parserError)
+    });
+    
+    pdfParser.on("pdfParser_dataReady", (pdfdata) => {
+
+      const textoPdf = pdfParser.getRawTextContent();
+      const arrayTextoPdf = textoPdf.split(/\r\n/);
+      const hashReverso = { "hash": arrayTextoPdf[5] };
+      const decriptar = CryptoJS.AES.decrypt(hashReverso.hash, "Secret Passphrase").toString(CryptoJS.enc.Utf8);
+      
+      if(decriptar.length > 0){
+        const ObjData = JSON.parse(decriptar);
+
+        const validar = certificados.find((certificado) => {
+          if((certificado.id === ObjData.id) && (certificado.timestamp === ObjData.timestamp)){
+            return certificado;
+          }
+        });
+
+        if(validar){
+          return res.send({
+            tipo: 'sucesso',
+            mensagem: 'Pdf valido',
+          });
+        }
+
+        else{
+          return res.send({
+            tipo: 'error',
+            mensagem: 'Pdf não é valido',
+          });
+        }
+  
+      }
+      else{
+        return res.send({
+          tipo: 'error',
+          mensagem: 'Pdf não é valido',
+        });
+      }
+
+    });
+    
+    pdfParser.loadPDF(caminho)
+  }
+  else{
+    res.send({
+      tipo: 'error',
+      mensagem: 'caminho não existe'
+    });
   }
 
 });
