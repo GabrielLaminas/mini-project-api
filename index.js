@@ -17,6 +17,10 @@ app.use(cors());
 
 app.use(express.json());
 
+fs.mkdirSync('upload/', { recursive: true}, (err) => {
+  if (err) throw err;
+});
+
 let certificados = [
   {
     id: 1,
@@ -40,7 +44,7 @@ let certificados = [
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb){
-    cb(null, `${__dirname}/upload/`);
+    cb(null, 'upload/');
   },
   filename: function(req, file, cb){
     cb(null, file.originalname + Date.now() + path.extname(file.originalname));
@@ -121,7 +125,7 @@ app.route('/certificado').post((req, res) => {
           
         pdf.create(html, optionsPdf)
         .toFile(
-          path.join(__dirname + '/download' + `/certificado${curso}.pdf`), 
+          path.join(__dirname + '/download' + `/certificado${curso}.pdf`),
           (err, filepath) => {
             if(err){
               return res.json(err);
