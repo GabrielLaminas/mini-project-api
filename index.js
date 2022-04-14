@@ -40,7 +40,7 @@ let certificados = [
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb){
-    cb(null, 'upload/');
+    cb(null, `${__dirname}/upload/`);
   },
   filename: function(req, file, cb){
     cb(null, file.originalname + Date.now() + path.extname(file.originalname));
