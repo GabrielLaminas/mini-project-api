@@ -40,7 +40,7 @@ let certificados = [
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb){
-    cb(null, 'upload/');
+    cb(null, 'src/upload/');
   },
   filename: function(req, file, cb){
     cb(null, file.originalname + Date.now() + path.extname(file.originalname));
@@ -142,7 +142,7 @@ app.route('/certificado').post((req, res) => {
 
 app.post('/validacao', upload.single('pdf'), async (req, res) => {
 
-  const caminho = `${req.file.destination}${req.file.filename}`;
+  const caminho = `src/${req.file.destination}${req.file.filename}`;
 
   if(fs.existsSync(caminho)){
     const pdfParser = new PDFParser(this, 1);
@@ -191,7 +191,7 @@ app.post('/validacao', upload.single('pdf'), async (req, res) => {
 
     });
     
-    pdfParser.loadPDF(caminho)
+    pdfParser.loadPDF(caminho);
   }
   else{
     res.send({
@@ -199,5 +199,4 @@ app.post('/validacao', upload.single('pdf'), async (req, res) => {
       mensagem: 'caminho não existe'
     });
   }
-
 });
