@@ -19,10 +19,11 @@ app.use(cors());
 
 app.use(express.json());
 
+/*
 fs.mkdirSync('upload/', { recursive: true}, (err) => {
   if (err) throw err;
 });
-
+*/
 let certificados = [
   {
     id: 1,
