@@ -70,7 +70,7 @@ app.route('/certificado').get((req, res) => {
   res.json(pegarDados);
 });
 
-app.route('/certificado', createProxyMiddleware({ changeOrigin: true })).post((req, res) => {
+app.route('/certificado', createProxyMiddleware({ target: 'https://react-miniproject.vercel.app/', changeOrigin: true })).post((req, res) => {
   const { id, curso, timestamp, dataEmissao } = req.body;
 
   const certificado = certificados.find((certificado) => certificado.id === id)
