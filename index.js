@@ -19,11 +19,10 @@ app.use(express.json());
 
 app.use(cors());
 
-/*
 fs.mkdirSync('upload/', { recursive: true}, (err) => {
   if (err) throw err;
 });
-*/
+
 let certificados = [
   {
     id: 1,
@@ -68,7 +67,7 @@ app.route('/certificado').get((req, res) => {
   res.json(pegarDados);
 });
 
-app.route('/download').post((req, res) => {
+app.route('/certificado').post((req, res) => {
   res.setHeader('Access-Control-Allow-Credentials', true)
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
