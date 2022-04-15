@@ -11,11 +11,20 @@ const fs = require('fs');
 const app = express();
 const path = require('path');
 
+const corsOptions ={
+  origin: '*',
+  methods: ['GET, POST'],
+  credentials: true,   
+  optionSuccessStatus: 200,
+}
+
+app.use(cors(corsOptions));
+
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`Porta ${port} disponível`));
 
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
