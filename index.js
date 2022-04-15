@@ -11,7 +11,9 @@ const fs = require('fs');
 const app = express();
 const path = require('path');
 
-app.listen('5000', () => console.log('Porta 5000 disponível'));
+const port = process.env.PORT || 5000;
+
+app.listen(port, () => console.log('Porta 5000 disponível'));
 
 app.use(cors());
 
