@@ -17,7 +17,12 @@ app.listen(port, () => console.log(`Porta ${port} disponível`));
 
 app.use(express.json());
 
-app.use(cors());
+app.use(cors({
+  "origin": "*",
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 202
+}));
 
 fs.mkdirSync('upload/', { recursive: true}, (err) => {
   if (err) throw err;
@@ -68,7 +73,7 @@ app.route('/certificado').get((req, res) => {
 });
 
 app.route('/certificado').post((req, res) => {
-  res.setHeader('Access-Control-Allow-Credentials', true)
+  res.setHeader('Access-Control-Allow-Credentials', false)
   res.setHeader('Access-Control-Allow-Origin', '*')
   res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
   res.setHeader(
