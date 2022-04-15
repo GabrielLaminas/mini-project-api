@@ -13,11 +13,9 @@ const path = require('path');
 
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => console.log(`Porta ${port} disponível`));
+app.use(cors());
 
 app.use(express.json());
-
-app.use(cors());
 
 fs.mkdirSync('upload/', { recursive: true}, (err) => {
   if (err) throw err;
@@ -206,5 +204,7 @@ app.post('/validacao', upload.single('pdf'), async (req, res) => {
     });
   }
 });
+
+app.listen(port, () => console.log(`Porta ${port} disponível`));
 
 module.exports = app;
