@@ -11,8 +11,6 @@ const fs = require('fs');
 const app = express();
 const path = require('path');
 
-const { createProxyMiddleware } = require('http-proxy-middleware');
-
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`Porta ${port} disponível`));
@@ -70,7 +68,14 @@ app.route('/certificado').get((req, res) => {
   res.json(pegarDados);
 });
 
-app.route('/certificado', createProxyMiddleware({ target: 'https://react-miniproject.vercel.app/', changeOrigin: true })).post((req, res) => {
+app.route('/download').post((req, res) => {
+  res.setHeader('Access-Control-Allow-Credentials', true)
+  res.setHeader('Access-Control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+  )
   const { id, curso, timestamp, dataEmissao } = req.body;
 
   const certificado = certificados.find((certificado) => certificado.id === id)
