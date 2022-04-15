@@ -55,7 +55,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-app.route('/').get((req, res) => {
+app.route('/api').get((req, res) => {
   const pegarDados = certificados.map((infos) => {
     return {
       id: infos.id,

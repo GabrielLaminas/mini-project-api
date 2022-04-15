@@ -10,14 +10,6 @@
     {
       "source": "/(.*)",
       "destination": "/"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/certificado"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/validacao"
     }
   ]
 }
