@@ -9,11 +9,7 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/certificado"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/validacao"
+      "dest": "/"
     }
   ]
 }
