@@ -8,19 +8,12 @@
   ],
   "routes": [ 
     {
-      "src": "/",
+      "src": "/(.*)",
       "methods": [
         "POST",
         "GET"
       ],
-      "dest": "/certificado"
-    },
-    {
-      "src": "/",
-      "methods": [
-        "POST"
-      ],
-      "dest": "/validacao"
+      "dest": "/"
     }
   ]
 }
