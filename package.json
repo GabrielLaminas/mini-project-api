@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Api project",
   "main": "index.js",
-  "proxy": "https://react-miniproject.vercel.app/",
   "scripts": {
     "start": "node index.js"
   },

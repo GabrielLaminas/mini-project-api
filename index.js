@@ -6,7 +6,7 @@ const multer = require('multer');
 const PDFParser = require('pdf2json');
 
 const express = require('express');
-const cors = require('cors');
+//const cors = require('cors');
 const fs = require('fs');
 const app = express();
 const path = require('path');
@@ -17,12 +17,7 @@ app.listen(port, () => console.log(`Porta ${port} disponível`));
 
 app.use(express.json());
 
-app.use(cors({
-  "origin": "*",
-  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-  "preflightContinue": false,
-  "optionsSuccessStatus": 202
-}));
+//app.use(cors());
 
 fs.mkdirSync('upload/', { recursive: true}, (err) => {
   if (err) throw err;
@@ -73,13 +68,6 @@ app.route('/certificado').get((req, res) => {
 });
 
 app.route('/certificado').post((req, res) => {
-  res.setHeader('Access-Control-Allow-Credentials', true)
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-  )
   const { id, curso, timestamp, dataEmissao } = req.body;
 
   const certificado = certificados.find((certificado) => certificado.id === id)
