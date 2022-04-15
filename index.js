@@ -6,7 +6,7 @@ const multer = require('multer');
 const PDFParser = require('pdf2json');
 
 const express = require('express');
-//const cors = require('cors');
+const cors = require('cors');
 const fs = require('fs');
 const app = express();
 const path = require('path');
@@ -17,7 +17,24 @@ app.listen(port, () => console.log(`Porta ${port} disponível`));
 
 app.use(express.json());
 
-//app.use(cors());
+app.use(cors());
+
+const { createProxyMiddleware } = require('http-proxy-middleware');
+
+module.exports = app => {
+  app.use(
+    createProxyMiddleware('/certificado', {
+      target: 'https://mini-project-api.vercel.app',
+      changeOrigin: true
+    })
+  )
+  app.use(
+    createProxyMiddleware('/validacao', {
+      target: 'https://mini-project-api.vercel.app',
+      changeOrigin: true
+    })
+  )
+}
 
 fs.mkdirSync('upload/', { recursive: true}, (err) => {
   if (err) throw err;
