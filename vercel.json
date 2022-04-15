@@ -6,10 +6,21 @@
       "use": "@vercel/node"
     }
   ],
-  "routes": [
+  "routes": [ 
     {
       "src": "/(.*)",
-      "dest": "/"
+      "methods": [
+        "POST",
+        "GET"
+      ],
+      "dest": "/certificado"
+    },
+    {
+      "src": "/(.*)",
+      "methods": [
+        "POST"
+      ],
+      "dest": "/validacao"
     }
   ]
 }
