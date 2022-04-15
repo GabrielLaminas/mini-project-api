@@ -206,3 +206,5 @@ app.post('/validacao', upload.single('pdf'), async (req, res) => {
     });
   }
 });
+
+module.exports = app;
