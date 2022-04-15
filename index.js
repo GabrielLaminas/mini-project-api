@@ -11,14 +11,12 @@ const fs = require('fs');
 const app = express();
 const path = require('path');
 
-const corsOptions ={
-  origin: '*',
-  methods: ['GET, POST'],
-  credentials: true,   
-  optionSuccessStatus: 200,
-}
-
-app.use(cors(corsOptions));
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", 'GET,POST');
+  app.use(cors());
+  next();
+});
 
 const port = process.env.PORT || 5000;
 
