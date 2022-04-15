@@ -11,23 +11,15 @@ const fs = require('fs');
 const app = express();
 const path = require('path');
 
+const { createProxyMiddleware } = require('http-proxy-middleware');
+
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`Porta ${port} disponível`));
 
 app.use(express.json());
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Credentials", true);
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Methods", 'GET,POST');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-  )
-  app.use(cors());
-  next();
-});
+app.use(cors());
 
 /*
 fs.mkdirSync('upload/', { recursive: true}, (err) => {
@@ -78,7 +70,7 @@ app.route('/certificado').get((req, res) => {
   res.json(pegarDados);
 });
 
-app.route('/certificado').post((req, res) => {
+app.route('/certificado', createProxyMiddleware({ changeOrigin: true })).post((req, res) => {
   const { id, curso, timestamp, dataEmissao } = req.body;
 
   const certificado = certificados.find((certificado) => certificado.id === id)
