@@ -13,7 +13,7 @@ const path = require('path');
 
 const port = process.env.PORT || 5000;
 
-app.listen(port, () => console.log('Porta 5000 disponível'));
+app.listen(port, () => console.log(`Porta ${port} disponível`));
 
 app.use(cors());
 

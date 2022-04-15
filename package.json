@@ -3,12 +3,15 @@
   "version": "1.0.0",
   "description": "Api project",
   "main": "index.js",
+  "engines": {
+    "node": "14.x"
+  },
   "scripts": {
     "start": "node index.js"
   },
   "keywords": [],
-  "author": "Gabriel de Freitas Laminas",
-  "license": "MIT",
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
     "crypto-js": "^4.1.1",
