@@ -19,23 +19,6 @@ app.use(express.json());
 
 app.use(cors());
 
-const { createProxyMiddleware } = require('http-proxy-middleware');
-
-module.exports = app => {
-  app.use(
-    createProxyMiddleware('/certificado', {
-      target: 'https://mini-project-api.vercel.app',
-      changeOrigin: true
-    })
-  )
-  app.use(
-    createProxyMiddleware('/validacao', {
-      target: 'https://mini-project-api.vercel.app',
-      changeOrigin: true
-    })
-  )
-}
-
 fs.mkdirSync('upload/', { recursive: true}, (err) => {
   if (err) throw err;
 });
