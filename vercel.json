@@ -11,20 +11,16 @@
       "src": "/(.*)",
       "methods": [
         "POST",
-        "GET"
+        "GET",
+        "OPTIONS"
       ],
-      "dest": "/"
-    }
-  ],
-  "headers": [
-    {
-      "src": "/(.*)",
       "headers": [
         {
           "key": "access-control-allow-origin",
           "value": "*"
         }
-      ]
+      ],
+      "dest": "/"
     }
   ]
 }
