@@ -15,6 +15,13 @@ const port = process.env.PORT || 5000;
 
 app.use(cors());
 
+var corsOptions = {
+  "origin": "*",
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 202 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
 app.use(express.json());
 /*
 fs.mkdirSync('upload/', { recursive: true}, (err) => {
@@ -65,7 +72,7 @@ app.route('/listagem').get((req, res) => {
   res.json(pegarDados);
 });
 
-app.route('/certificado').post((req, res) => {
+app.post('/certificado', cors(corsOptions), ((req, res) => {
   const { id, curso, timestamp, dataEmissao } = req.body;
 
   const certificado = certificados.find((certificado) => certificado.id === id)
@@ -142,7 +149,7 @@ app.route('/certificado').post((req, res) => {
     return res.json('Certificado não existe');
   }
 
-});
+}));
 
 app.post('/validacao', upload.single('pdf'), async (req, res) => {
 
@@ -207,27 +214,4 @@ app.post('/validacao', upload.single('pdf'), async (req, res) => {
 
 app.listen(port, () => console.log(`Porta ${port} disponível`));
 
-const allowCors = fn => async (req, res) => {
-  res.setHeader('Access-Control-Allow-Credentials', true)
-  res.setHeader('Access-Control-Allow-Origin', '*')
-  // another common pattern
-  // res.setHeader('Access-Control-Allow-Origin', req.headers.origin);
-  res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT')
-  res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
-  )
-  if (req.method === 'OPTIONS') {
-    res.status(200).end()
-    return
-  }
-  return await fn(req, res)
-}
-
-const handler = (req, res) => {
-  const d = new Date()
-  res.end(d.toString())
-}
-
-module.exports = allowCors(handler);
 module.exports = app;
