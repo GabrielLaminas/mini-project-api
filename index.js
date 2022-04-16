@@ -15,12 +15,7 @@ const port = process.env.PORT || 5000;
 
 app.use(cors());
 
-var corsOptions = {
-  "origin": "*",
-  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
-  "preflightContinue": false,
-  "optionsSuccessStatus": 202 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
+app.options("*", cors());
 
 app.use(express.json());
 /*
@@ -72,7 +67,7 @@ app.route('/listagem').get((req, res) => {
   res.json(pegarDados);
 });
 
-app.post('/certificado', cors(corsOptions), ((req, res) => {
+app.route('/certificado').post((req, res) => {
   const { id, curso, timestamp, dataEmissao } = req.body;
 
   const certificado = certificados.find((certificado) => certificado.id === id)
@@ -149,7 +144,7 @@ app.post('/certificado', cors(corsOptions), ((req, res) => {
     return res.json('Certificado não existe');
   }
 
-}));
+});
 
 app.post('/validacao', upload.single('pdf'), async (req, res) => {
 
