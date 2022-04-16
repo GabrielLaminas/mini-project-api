@@ -66,6 +66,10 @@ app.route('/listagem').get((req, res) => {
 });
 
 app.route('/certificado').post((req, res) => {
+  res.set('Access-Control-Allow-Origin', '*');
+  res.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.set('Access-Control-Allow-Headers', "X-Requested-With, Accept, Accept-Version, Content-Length, Content-Type, Date, X-Api-Version")
+
   const { id, curso, timestamp, dataEmissao } = req.body;
 
   const certificado = certificados.find((certificado) => certificado.id === id)
