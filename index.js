@@ -14,6 +14,7 @@ const path = require('path');
 const port = process.env.PORT || 5000;
 
 app.use(cors());
+app.options('*', cors());
 
 app.use(express.json());
 /*
@@ -68,7 +69,6 @@ app.route('/listagem').get((req, res) => {
 app.route('/certificado').post((req, res) => {
   res.set('Access-Control-Allow-Origin', '*');
   res.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.set('Access-Control-Allow-Headers', "X-Requested-With, Accept, Accept-Version, Content-Length, Content-Type, Date, X-Api-Version")
 
   const { id, curso, timestamp, dataEmissao } = req.body;
 
