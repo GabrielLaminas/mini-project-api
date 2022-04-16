@@ -14,12 +14,6 @@
         "GET",
         "OPTIONS"
       ],
-      "headers": [
-        {
-          "key": "access-control-allow-origin",
-          "value": "*"
-        }
-      ],
       "dest": "/"
     }
   ]
