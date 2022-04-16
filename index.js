@@ -67,8 +67,8 @@ app.route('/listagem').get((req, res) => {
 });
 
 app.route('/certificado').post((req, res) => {
-  res.set('Access-Control-Allow-Origin', '*');
-  res.set('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.set('Access-Control-Allow-Origin', 'http://localhost:3000/');
+  res.set('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
 
   const { id, curso, timestamp, dataEmissao } = req.body;
 
